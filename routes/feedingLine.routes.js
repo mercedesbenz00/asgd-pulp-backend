@@ -1,17 +1,17 @@
 const express = require("express");
 
 const { authJwt } = require("../middleware");
-const controller = require("../controllers/user.controller");
+const controller = require("../controllers/feedingLine.controller");
 
 const router = express.Router()
 
 /**
  * @openapi
- * '/api/users':
+ * '/api/feedingLines':
  *  get:
  *     tags:
- *     - User
- *     summary: Get user list
+ *     - FeedingLine
+ *     summary: Get feedingLine list
  *     security:
  *	     - bearerAuth: []
  *     parameters:
@@ -40,24 +40,24 @@ const router = express.Router()
  *                      properties:
  *                         id:
  *                          type: number
- *                         email:
+ *                         code:
  *                          type: string
  *       500:
  *           description: Bad request
  */
 router.get(
-    "/api/users",
+    "/api/feedingLines",
     [authJwt.verifyToken, authJwt.hasAtLeastOneRole(['Admin'])],
     controller.getAll
 );
 
 /**
  * @openapi
- * '/api/users/{id}':
+ * '/api/feedingLines/{id}':
  *  get:
  *     tags:
- *     - User
- *     summary: Get user by id
+ *     - FeedingLine
+ *     summary: Get feedingLine by id
  *     security:
  *	     - bearerAuth: []
  *     parameters:
@@ -65,7 +65,7 @@ router.get(
  *        in: path
  *        type: number
  *        required: true
- *        description: user id
+ *        description: feedingLine id
  *     responses:
  *       200:
  *         description: Success
@@ -76,63 +76,26 @@ router.get(
  *              properties:
  *                id:
  *                  type: number
- *                email:
+ *                code:
  *                  type: string
  *       404:
- *           description: User not found
+ *           description: FeedingLine not found
  *       500:
  *           description: Bad request
  */
 router.get(
-    "/api/users/:id",
+    "/api/feedingLines/:id",
     [authJwt.verifyToken, authJwt.hasAtLeastOneRole(['Admin'])],
     controller.getById
 ); 
 
 /**
  * @openapi
- * '/api/users/exists':
- *  get:
- *     tags:
- *     - User
- *     summary: Check if user exists
- *     security:
- *	     - bearerAuth: []
- *     parameters:
- *      - name: email
- *        in: query
- *        type: string
- *        description: email of user
- *      - name: phone
- *        in: query
- *        type: string
- *        description: phone of user
- *     responses:
- *       200:
- *         description: Success
- *         content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                isFound:
- *                  type: boolean
- *       500:
- *           description: Bad request
- */
- router.get(
-    "/api/users/exists",
-    [authJwt.verifyToken, authJwt.hasAtLeastOneRole(['Admin'])],
-    controller.checkUserExists
-); 
-
-/**
- * @openapi
- * '/api/users/{id}':
+ * '/api/feedingLines/{id}':
  *  put:
  *     tags:
- *     - User
- *     summary: Modify a user
+ *     - FeedingLine
+ *     summary: Modify a feedingLine
  *     security:
  *	     - bearerAuth: []
  *     parameters:
@@ -140,7 +103,7 @@ router.get(
  *        in: path
  *        type: number
  *        required: true
- *        description: user id
+ *        description: feedingLine id
  *     requestBody:
  *      required: true
  *      content:
@@ -148,7 +111,7 @@ router.get(
  *           schema:
  *            type: object
  *            properties:
- *              firstName:
+ *              machine_code:
  *                type: string
  *     responses:
  *      200:
@@ -159,24 +122,24 @@ router.get(
  *        description: Not Found
  */
 router.put(
-    "/api/users/:id",
+    "/api/feedingLines/:id",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.update
 );
 
 /**
  * @openapi
- * '/api/users/{id}':
+ * '/api/feedingLines/{id}':
  *  delete:
  *     tags:
- *     - User
- *     summary: Remove user by id
+ *     - FeedingLine
+ *     summary: Remove feedingLine by id
  *     security:
  *	     - bearerAuth: []
  *     parameters:
  *      - name: id
  *        in: path
- *        description: The unique id of the user
+ *        description: The unique id of the feedingLine
  *        required: true
  *     responses:
  *      200:
@@ -187,7 +150,7 @@ router.put(
  *        description: Not Found
  */
 router.delete(
-    "/api/users/:id",
+    "/api/feedingLines/:id",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.delete
 );

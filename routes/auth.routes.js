@@ -83,36 +83,36 @@ const router = express.Router()
  */
 router.post("/api/auth/signin", [rateLimiter.loginRateLimiter], controller.signinForWebUser);
 
-/**
- * @openapi
- * '/api/auth/verify':
- *  post:
- *     tags:
- *     - Auth
- *     summary: Verify user by phone sms.
- *     requestBody:
- *      required: true
- *      content:
- *        application/json:
- *           schema:
- *            type: object
- *            required:
- *              - phone
- *              - tac_code
- *            properties:
- *              phone:
- *                type: string
- *              tac_code:
- *                type: string
- *     responses:
- *      200:
- *        description: Verification success
- *      403:
- *        description: Verification failed.
- *      404:
- *        description: User not found
- */
-router.post("/api/auth/verify", controller.verify);
+// /**
+//  * @openapi
+//  * '/api/auth/verify':
+//  *  post:
+//  *     tags:
+//  *     - Auth
+//  *     summary: Verify user by phone sms.
+//  *     requestBody:
+//  *      required: true
+//  *      content:
+//  *        application/json:
+//  *           schema:
+//  *            type: object
+//  *            required:
+//  *              - phone
+//  *              - tac_code
+//  *            properties:
+//  *              phone:
+//  *                type: string
+//  *              tac_code:
+//  *                type: string
+//  *     responses:
+//  *      200:
+//  *        description: Verification success
+//  *      403:
+//  *        description: Verification failed.
+//  *      404:
+//  *        description: User not found
+//  */
+// router.post("/api/auth/verify", controller.verify);
 
 /**
  * @openapi

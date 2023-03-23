@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Api for ASGD Pulp System",
   "main": "server.js",
-  "engines": { "node" : "16.15.1" },
+  "engines": {
+    "node": "16.15.1"
+  },
   "scripts": {
     "test": "mocha",
     "dev": "nodemon node server.js",

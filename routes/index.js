@@ -2,6 +2,7 @@ const express = require("express");
 const authRoutes = require("./auth.routes.js");
 const userRoutes = require("./user.routes.js");
 const orderRoutes = require("./order.routes.js");
+const feedingLineRoutes = require("./feedingLine.routes.js");
 const router = express.Router()
 
 /**
@@ -16,7 +17,7 @@ const router = express.Router()
  *         description: API is  running
  */
 router.get('/healthcheck', (req, res) => {
-    res.json({ message: "Welcome to APICAL LDS application." });
+    res.json({ message: "Welcome to ASGD Pulp application." });
 })
 
 router.use(function (req, res, next) {
@@ -30,5 +31,6 @@ router.use(function (req, res, next) {
 router.use(authRoutes)
 router.use(userRoutes)
 router.use(orderRoutes)
+router.use(feedingLineRoutes)
 
 module.exports = router

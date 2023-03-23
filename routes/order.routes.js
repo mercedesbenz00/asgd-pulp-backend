@@ -125,7 +125,7 @@ router.get(
 );
 
 /**
- * openapi
+ * @openapi
  * '/api/orders/{id}':
  *  get:
  *     tags:
@@ -179,7 +179,7 @@ router.get(
 ); 
 
 /**
- * openapi
+ * @openapi
  * '/api/orders/{id}':
  *  put:
  *     tags:
@@ -219,7 +219,7 @@ router.put(
 );
 
 /**
- * openapi
+ * @openapi
  * '/api/orders/{id}':
  *  delete:
  *     tags:
