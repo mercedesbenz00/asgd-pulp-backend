@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
         allowNull: false,
       },
-      //Foreign keys: line_code, product_code, order_id
+      //Foreign keys: line_code, brand_code, product_code, order_id
       pack_count: {
         type: Sequelize.INTEGER,
         defaultValue: 0,

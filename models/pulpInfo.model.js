@@ -6,10 +6,6 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
         allowNull: false,
       },
-      ip_address: {
-        type: Sequelize.STRING,
-        unique: true,
-      },
       // type_code: {
       //   type: Sequelize.STRING,
       // },

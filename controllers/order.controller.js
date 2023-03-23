@@ -8,13 +8,11 @@ const Op = db.Sequelize.Op;
 exports.create = async (req, res) => {
     try {
 
-        if (!req.body.ktp_no || !req.body.name)
+        if (!req.body.line_code)
             return res.status(404).send({ message: "Invalid request data.", msg_code: "INVALID_REQUEST_DATA" });
 
         const newOrder = {
-            quantity: req.body.quantity,
-            unit: req.body.unit,
-            order_date: new Date()
+            ...req.body
         }
 
         const entity = await Order.create(newOrder);
@@ -37,10 +35,12 @@ exports.getAll = async (req, res) => {
     }
 
     const queryParam = {
-        attributes: [ 'id', 'quantity', 'unit', 'order_date' ],
+        attributes: [ 'id', 'quantity', 'a_batch_number', 'b_batch_number', 's_batch_number',
+         'a_actual_quantity', 'b_actual_quantity', 's_actual_quantity', 'a_cast_quantity', 'b_cast_quantity',
+         's_cast_quantity', 'a_ratio', 'b_ratio', 'start_time' ],
         limit: limit ? limit : undefined,
         offset: offset,
-        order: [['order_date', 'DESC']],
+        order: [['updatedAt', 'DESC']],
     };
 
     if (from && to) {
@@ -49,7 +49,7 @@ exports.getAll = async (req, res) => {
             return;
         }
         
-        queryParam.where.order_date = {
+        queryParam.where.updatedAt = {
             [Op.between]: [moment(from).toDate(), moment(to).toDate()]
         }
     }
