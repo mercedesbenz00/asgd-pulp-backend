@@ -1,0 +1,55 @@
+{
+  "name": "asgd",
+  "version": "1.0.0",
+  "description": "Api for ASGD Pulp System",
+  "main": "server.js",
+  "engines": { "node" : "16.15.1" },
+  "scripts": {
+    "test": "mocha",
+    "dev": "nodemon node server.js",
+    "start": "node server.js",
+    "db:migrate-create": "./node_modules/.bin/sequelize model:create",
+    "db:migrate-generate": "./node_modules/.bin/sequelize migration:generate",
+    "db:migrate": "./node_modules/.bin/sequelize db:migrate",
+    "db:migrate-undo": "./node_modules/.bin/sequelize db:migrate:undo",
+    "db:migrate-undo-all": "./node_modules/.bin/sequelize db:migrate:undo:all",
+    "db:seed-generate": "./node_modules/.bin/sequelize seed:generate",
+    "db:seed": "./node_modules/.bin/sequelize db:seed:all",
+    "db:seed-undo": "./node_modules/.bin/sequelize db:seed:undo",
+    "db:seed-undo-all": "./node_modules/.bin/sequelize db:seed:undo:all"
+  },
+  "keywords": [
+    "node.js",
+    "jwt",
+    "authentication",
+    "express",
+    "pg"
+  ],
+  "author": "yuyun",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "email-validator": "^2.0.4",
+    "express": "^4.17.1",
+    "express-rate-limit": "^6.5.1",
+    "helmet": "^5.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.7.3",
+    "sequelize": "^6.21.3",
+    "sequelize-cli": "^6.4.1",
+    "sharp": "^0.31.0",
+    "swagger-jsdoc": "^6.2.1",
+    "swagger-ui-express": "^4.5.0",
+    "uniqid": "^5.4.0"
+  },
+  "devDependencies": {
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.19",
+    "sqlite3": "^5.0.9"
+  }
+}
