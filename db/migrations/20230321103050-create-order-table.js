@@ -66,6 +66,30 @@ module.exports = {
           key: 'code'
         },
       },
+      a_pulp_type_code: {
+        type: Sequelize.STRING,
+        field: "a_pulp_type_code",
+        references: {
+          model: 'pulp_types',
+          key: 'code'
+        },
+      },
+      b_pulp_type_code: {
+        type: Sequelize.STRING,
+        field: "b_pulp_type_code",
+        references: {
+          model: 'pulp_types',
+          key: 'code'
+        },
+      },
+      s_pulp_type_code: {
+        type: Sequelize.STRING,
+        field: "s_pulp_type_code",
+        references: {
+          model: 'pulp_types',
+          key: 'code'
+        },
+      },
       a_batch_number: {
         type: Sequelize.STRING,
         field: "a_batch_number",

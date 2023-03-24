@@ -20,19 +20,18 @@ const router = express.Router()
  *           schema:
  *            type: object
  *            required:
- *              - ktp_no
- *              - name
- *              - unit (KG or L)
- *              - quantity
+ *              - line_code
  *            properties:
- *              ktp_no:
- *                type: number
- *              name:
- *                type: number
- *              quantity:
- *                type: number
- *              unit:
+ *              line_code:
  *                type: string
+ *              a_product_code:
+ *                type: string
+ *              a_brand_code:
+ *                type: string
+ *              a_ratio:
+ *                type: number
+ *              b_ratio:
+ *                type: number
  *     responses:
  *      200:
  *        description: Created order

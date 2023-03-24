@@ -93,6 +93,18 @@ db.order.belongsTo(db.product, {
     foreignKey: "s_product_code",
     sourceKey: "code"
 });
+db.order.belongsTo(db.pulpType, {
+    foreignKey: "a_pulp_type_code",
+    sourceKey: "code"
+});
+db.order.belongsTo(db.pulpType, {
+    foreignKey: "b_pulp_type_code",
+    sourceKey: "code"
+});
+db.order.belongsTo(db.pulpType, {
+    foreignKey: "s_pulp_type_code",
+    sourceKey: "code"
+});
 // feedOperationTransaction
 db.feedOperationTransaction.belongsTo(db.feedingLine, {
     foreignKey: "line_code",

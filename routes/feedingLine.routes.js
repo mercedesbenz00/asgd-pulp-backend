@@ -8,6 +8,41 @@ const router = express.Router()
 /**
  * @openapi
  * '/api/feedingLines':
+ *  post:
+ *     tags:
+ *     - FeedingLine
+ *     summary: Create feedingline.
+ *     security:
+ *	     - bearerAuth: []
+ *     requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *           schema:
+ *            type: object
+ *            required:
+ *              - code
+ *              - machine_code
+ *            properties:
+ *              code:
+ *                type: string
+ *              machine_code:
+ *                type: string
+ *     responses:
+ *      200:
+ *        description: Created feedling line
+ *      402:
+ *        description: request is invalid
+ */
+ router.post(
+    "/api/feedingLines",
+    [authJwt.verifyToken, authJwt.hasAtLeastOneRole(['Admin'])],
+    controller.create
+);
+
+/**
+ * @openapi
+ * '/api/feedingLines':
  *  get:
  *     tags:
  *     - FeedingLine

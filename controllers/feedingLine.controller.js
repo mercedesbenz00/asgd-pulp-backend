@@ -1,6 +1,24 @@
 const db = require("../models");
 const FeedingLine = db.feedingLine;
 
+exports.create = async (req, res) => {
+    try {
+
+        if (!req.body.machine_code || !req.body.code)
+            return res.status(404).send({ message: "Invalid request data.", msg_code: "INVALID_REQUEST_DATA" });
+
+        const newEntity = {
+            ...req.body
+        }
+
+        const entity = await FeedingLine.create(newEntity);
+        res.send({ message: "Feedingline created successfully!", order: entity, msg_code: "FEED_LINE_CREATE_SUCCESS" });
+
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
+};
+
 exports.getAll = (req, res) => {
     let { page, limit } = req.query;
     let offset = undefined
