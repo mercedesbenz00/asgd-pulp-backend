@@ -9,6 +9,9 @@ const app = express();
 const router = require("./routes/index.js");
 const swaggerDocs = require("./swagger.js");
 const { rateLimiter } = require("./middleware");
+var mqttClient = require("./mqtt/mqttClient");
+mqttClient();
+//mqttClient.client.subscribe("abcde", {qos: 0})
 
 if (process.env.ALLOWED_ORIGIN_URL) {
     const whitelist = process.env.ALLOWED_ORIGIN_URL.split(',').map(address => address.trim());

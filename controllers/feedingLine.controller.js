@@ -1,6 +1,8 @@
 const db = require("../models");
 const FeedingLine = db.feedingLine;
 
+// var mqttClient = require("../mqtt/mqttClient");
+
 exports.create = async (req, res) => {
     try {
 
@@ -24,6 +26,7 @@ exports.getAll = (req, res) => {
     let offset = undefined
     let pagination = undefined
 
+    // mqttClient.client.sendMessage("abcde", "kkkkkk")
     if (page && limit) {
         page = parseInt(page);
         limit = parseInt(limit);
