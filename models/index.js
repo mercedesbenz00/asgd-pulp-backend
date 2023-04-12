@@ -114,6 +114,10 @@ db.feedOperationTransaction.belongsTo(db.product, {
     foreignKey: "product_code",
     sourceKey: "code"
 });
+db.feedOperationTransaction.belongsTo(db.brand, {
+    foreignKey: "brand_code",
+    sourceKey: "code"
+});
 db.feedOperationTransaction.belongsTo(db.order, {
     foreignKey: "order_id"
 });
