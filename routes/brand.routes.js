@@ -11,7 +11,7 @@ const router = express.Router()
  *  post:
  *     tags:
  *     - Brand
- *     summary: Create feedingline.
+ *     summary: Create brand.
  *     security:
  *	     - bearerAuth: []
  *     requestBody:
@@ -29,7 +29,7 @@ const router = express.Router()
  *                type: string
  *     responses:
  *      200:
- *        description: Created feedling line
+ *        description: Created brand
  *      402:
  *        description: request is invalid
  */

@@ -1,7 +1,4 @@
-const db = require("../models");
-const Brand = db.brand;
-
-// var mqttClient = require("../mqtt/mqttClient");
+const brandService = require("../services/brand.service");
 
 exports.create = async (req, res) => {
     try {
@@ -9,11 +6,7 @@ exports.create = async (req, res) => {
         if (!req.body.name || !req.body.code)
             return res.status(404).send({ message: "Invalid request data.", msg_code: "INVALID_REQUEST_DATA" });
 
-        const newEntity = {
-            ...req.body
-        }
-
-        const entity = await Brand.create(newEntity);
+        const entity = await brandService.create(req.body);
         res.send({ message: "Brand created successfully!", order: entity, msg_code: "BRAND_CREATE_SUCCESS" });
 
     } catch (err) {
@@ -22,25 +15,7 @@ exports.create = async (req, res) => {
 };
 
 exports.getAll = (req, res) => {
-    let { page, limit } = req.query;
-    let offset = undefined
-    let pagination = undefined
-
-    // mqttClient.client.sendMessage("abcde", "kkkkkk")
-    if (page && limit) {
-        page = parseInt(page);
-        limit = parseInt(limit);
-        offset = page * limit;
-        pagination = { page, limit };
-    }
-    Brand.findAndCountAll(
-        {
-            where: { deleted: false },
-            limit: limit ? limit : undefined,
-            offset: offset,
-            order: [['updatedAt', 'DESC']]
-        }
-    ).then(brands => {
+    brandService.getBrands(req.query).then(brands => {
         if (!brands) {
             return res.status(404).send({ message: "Brand Not found.", msg_code: "BRAND_NOT_FOUND" });
         }
@@ -55,16 +30,14 @@ exports.getAll = (req, res) => {
 exports.update = async (req, res) => {
     try {
         const id = req.params.id;
-        const objectToUpdate = {...req.body};
+        const data = req.body;
 
-        const result = await Brand.update(objectToUpdate, { where: { id: id } });
+        const result = await brandService.update(id, data);
 
         if (!result[0])
             res.status(404).send({ message: "Brand Not found.", msg_code: "BRAND_NOT_FOUND" });
         else {
-            const brand = await Brand.findOne({
-                where: { id: id },
-            });
+            const brand = await brandService.getById(id);
             res.send({ message: "Brand updated successfully!", brand: brand, msg_code: "BRAND_UPDATE_SUCCESS" });
         }
     } catch (err) {
@@ -75,9 +48,7 @@ exports.update = async (req, res) => {
 exports.getById = async (req, res) => {
     try {
         const id = req.params.id;
-        const result = await Brand.findOne({
-            where: { id: id },
-        });
+        const result = await brandService.getById(id);
 
         if (!result)
             res.status(404).send({ message: "Brand Not found.", msg_code: "BRAND_NOT_FOUND" });
@@ -92,7 +63,7 @@ exports.getById = async (req, res) => {
 exports.deleteForce = async (req, res) => {
     try {
         const id = req.params.id;
-        const result = await Brand.destroy({ where: { id: id } });
+        const result = await brandService.deleteForce(id);
 
         if (!result)
             res.status(404).send({ message: "Brand Not found.", msg_code: "BRAND_NOT_FOUND" });
@@ -108,7 +79,7 @@ exports.deleteSoft = async (req, res) => {
     try {
         const id = req.params.id;
 
-        const result = await Brand.update({ deleted: true }, { where: { id: id } });
+        const result = await brandService.deleteSoft(id);
 
         if (!result[0])
             res.status(404).send({ message: "Brand Not found.", msg_code: "BRAND_NOT_FOUND" });

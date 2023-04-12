@@ -1,17 +1,17 @@
 const express = require("express");
 
 const { authJwt } = require("../middleware");
-const controller = require("../controllers/feedingLine.controller");
+const controller = require("../controllers/product.controller");
 
 const router = express.Router()
 
 /**
  * @openapi
- * '/api/feedingLines':
+ * '/api/products':
  *  post:
  *     tags:
- *     - FeedingLine
- *     summary: Create feedingline.
+ *     - Product
+ *     summary: Create product.
  *     security:
  *	     - bearerAuth: []
  *     requestBody:
@@ -22,31 +22,32 @@ const router = express.Router()
  *            type: object
  *            required:
  *              - code
- *              - machine_code
  *            properties:
  *              code:
  *                type: string
- *              machine_code:
+ *              brand_code:
+ *                type: string
+ *              name:
  *                type: string
  *     responses:
  *      200:
- *        description: Created feeding line
+ *        description: Created product
  *      402:
  *        description: request is invalid
  */
  router.post(
-    "/api/feedingLines",
+    "/api/products",
     [authJwt.verifyToken, authJwt.hasAtLeastOneRole(['Admin'])],
     controller.create
 );
 
 /**
  * @openapi
- * '/api/feedingLines':
+ * '/api/products':
  *  get:
  *     tags:
- *     - FeedingLine
- *     summary: Get feedingLine list
+ *     - Product
+ *     summary: Get product list
  *     security:
  *	     - bearerAuth: []
  *     parameters:
@@ -58,10 +59,6 @@ const router = express.Router()
  *        in: query
  *        type: number
  *        description: Page count of pagination.
- *      - name: line_code
- *        in: query
- *        type: string
- *        description: line code.
  *     responses:
  *       200:
  *         description: Success
@@ -85,18 +82,18 @@ const router = express.Router()
  *           description: Bad request
  */
 router.get(
-    "/api/feedingLines",
+    "/api/products",
     [authJwt.verifyToken, authJwt.hasAtLeastOneRole(['Admin'])],
     controller.getAll
 );
 
 /**
  * @openapi
- * '/api/feedingLines/{id}':
+ * '/api/products/{id}':
  *  get:
  *     tags:
- *     - FeedingLine
- *     summary: Get feedingLine by id
+ *     - Product
+ *     summary: Get product by id
  *     security:
  *	     - bearerAuth: []
  *     parameters:
@@ -104,7 +101,7 @@ router.get(
  *        in: path
  *        type: number
  *        required: true
- *        description: feedingLine id
+ *        description: product id
  *     responses:
  *       200:
  *         description: Success
@@ -118,23 +115,23 @@ router.get(
  *                code:
  *                  type: string
  *       404:
- *           description: FeedingLine not found
+ *           description: Product not found
  *       500:
  *           description: Bad request
  */
 router.get(
-    "/api/feedingLines/:id",
+    "/api/products/:id",
     [authJwt.verifyToken, authJwt.hasAtLeastOneRole(['Admin'])],
     controller.getById
 ); 
 
 /**
  * @openapi
- * '/api/feedingLines/{id}':
+ * '/api/products/{id}':
  *  put:
  *     tags:
- *     - FeedingLine
- *     summary: Modify a feedingLine
+ *     - Product
+ *     summary: Modify a product
  *     security:
  *	     - bearerAuth: []
  *     parameters:
@@ -142,7 +139,7 @@ router.get(
  *        in: path
  *        type: number
  *        required: true
- *        description: feedingLine id
+ *        description: product id
  *     requestBody:
  *      required: true
  *      content:
@@ -150,7 +147,11 @@ router.get(
  *           schema:
  *            type: object
  *            properties:
- *              machine_code:
+ *              code:
+ *                type: string
+ *              brand_code:
+ *                type: string
+ *              name:
  *                type: string
  *     responses:
  *      200:
@@ -161,24 +162,24 @@ router.get(
  *        description: Not Found
  */
 router.put(
-    "/api/feedingLines/:id",
+    "/api/products/:id",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.update
 );
 
 /**
  * @openapi
- * '/api/feedingLines/{id}':
+ * '/api/products/{id}':
  *  delete:
  *     tags:
- *     - FeedingLine
- *     summary: Remove feedingLine by id
+ *     - Product
+ *     summary: Remove product by id
  *     security:
  *	     - bearerAuth: []
  *     parameters:
  *      - name: id
  *        in: path
- *        description: The unique id of the feedingLine
+ *        description: The unique id of the product
  *        required: true
  *     responses:
  *      200:
@@ -189,9 +190,9 @@ router.put(
  *        description: Not Found
  */
 router.delete(
-    "/api/feedingLines/:id",
+    "/api/products/:id",
     [authJwt.verifyToken, authJwt.isAdmin],
-    controller.delete
+    controller.deleteSoft
 );
 
 module.exports = router
