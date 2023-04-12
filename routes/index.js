@@ -4,6 +4,7 @@ const userRoutes = require("./user.routes.js");
 const orderRoutes = require("./order.routes.js");
 const brandRoutes = require("./brand.routes.js");
 const productRoutes = require("./product.routes.js");
+const pulpInfoRoutes = require("./pulpInfo.routes.js");
 const feedingLineRoutes = require("./feedingLine.routes.js");
 const mqttPublisherRoutes = require("./mqttPublisher.routes.js");
 const router = express.Router()
@@ -38,5 +39,6 @@ router.use(feedingLineRoutes)
 router.use(mqttPublisherRoutes)
 router.use(brandRoutes)
 router.use(productRoutes)
+router.use(pulpInfoRoutes)
 
 module.exports = router
