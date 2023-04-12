@@ -24,7 +24,7 @@ exports.create = async (req, res) => {
 };
 
 exports.getAll = async (req, res) => {
-    let { page, limit, from, to } = req.query;
+    let { page, limit, from, to, line_code } = req.query;
     let offset = undefined
     let pagination = undefined
     if (page && limit) {
@@ -43,6 +43,10 @@ exports.getAll = async (req, res) => {
         order: [['updatedAt', 'DESC']],
     };
 
+    if (from || to || line_code) {
+        queryParam.where = {};
+    }
+
     if (from && to) {
         if (!moment(from, "YYYY-MM-DDTHH:mm:ssZ").isValid() || !moment(to, "YYYY-MM-DDTHH:mm:ssZ").isValid()) {
             res.status(402).send({ message: "date param is not valid" });
@@ -52,6 +56,10 @@ exports.getAll = async (req, res) => {
         queryParam.where.updatedAt = {
             [Op.between]: [moment(from).toDate(), moment(to).toDate()]
         }
+    }
+
+    if (line_code) {
+        queryParam.where.line_code = line_code;
     }
 
     Order.findAndCountAll(

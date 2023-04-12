@@ -48,6 +48,10 @@ class MqttHandler {
     this.mqttClient.publish(topic, message);
   }
 
+  sendJsonData(topic, jsonData) {
+    this.mqttClient.publish(topic, JSON.stringify(jsonData));
+  }
+
   // Subscribe to MQTT Message
   subscribe(topic, options) {
     this.mqttClient.subscribe(topic, options);

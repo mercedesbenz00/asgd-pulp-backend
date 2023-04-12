@@ -26,6 +26,14 @@ module.exports = {
           key: 'id'
         },
       },
+      brand_code: {
+        type: Sequelize.STRING,
+        field: "brand_code",
+        references: {
+          model: 'brands',
+          key: 'code'
+        },
+      },
       product_code: {
         type: Sequelize.STRING,
         field: "product_code",
