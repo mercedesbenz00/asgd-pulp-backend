@@ -3,7 +3,7 @@ const pulpInfoService = require("../services/pulpInfo.service");
 exports.create = async (req, res) => {
     try {
 
-        if (!req.body.name || !req.body.code)
+        if (!req.body.type_code || !req.body.product_code)
             return res.status(404).send({ message: "Invalid request data.", msg_code: "INVALID_REQUEST_DATA" });
 
         const entity = await pulpInfoService.create(req.body);
