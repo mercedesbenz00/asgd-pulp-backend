@@ -3,7 +3,7 @@ const express = require("express");
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/mqttPublisher.controller");
 
-const router = express.Router()
+const router = express.Router();
 
 /**
  * @openapi
@@ -21,9 +21,12 @@ const router = express.Router()
  *           schema:
  *            type: object
  *            required:
+ *              - line_code
  *              - topic
  *              - message
  *            properties:
+ *              line_code:
+ *                type: string
  *              topic:
  *                type: string
  *              message:
@@ -34,9 +37,6 @@ const router = express.Router()
  *      402:
  *        description: request is invalid
  */
- router.post(
-    "/api/mqtt/publish",
-    controller.publishMQTTMessage
-);
+router.post("/api/mqtt/publish", controller.publishMQTTMessage);
 
-module.exports = router
+module.exports = router;
