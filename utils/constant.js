@@ -9,6 +9,19 @@ const OperationMode = {
   LEARNING: "Learning",
 };
 
+const AI_UNKNOWN = "Unknown";
+
+const ALARM_TYPES = {
+  UNKNOWN_FEED: "UNKNOWN_FEED",
+  WRONG_FEED: "WRONG_FEED",
+  WRONG_RATIO: "WRONG_RATIO",
+};
+
+const TOPICS = {
+  IoT: "IoT",
+  APP: "App",
+};
+
 const USERS_ROLES_ENUM = {
   SYSTEM_ADMIN: "SYSTEM_ADMIN",
   ADMIN: "ADMIN",
@@ -41,4 +54,7 @@ module.exports = {
   OperationMode,
   USERS_ROLES_ENUM,
   TOKEN_KEY,
+  AI_UNKNOWN,
+  ALARM_TYPES,
+  TOPICS,
 };
