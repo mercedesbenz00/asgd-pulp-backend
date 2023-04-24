@@ -57,10 +57,10 @@ db.productPulpTypeGroup.belongsTo(db.pulpType, {
   foreignKey: "pulp_type_code",
   sourceKey: "code",
 });
-db.feedingLine.belongsTo(db.machine, {
-  foreignKey: "machine_code",
-  sourceKey: "code",
-});
+// db.feedingLine.belongsTo(db.machine, {
+//   foreignKey: "machine_code",
+//   sourceKey: "code",
+// });
 db.camera.belongsTo(db.feedingLine, {
   foreignKey: "line_code",
   sourceKey: "code",
@@ -141,6 +141,17 @@ db.alarm.belongsTo(db.feedOperationTransaction, {
 db.alarm.belongsTo(db.alarmType, {
   foreignKey: "alarm_type_code",
   sourceKey: "code",
+});
+
+db.feedingLine.belongsTo(db.machine, {
+  foreignKey: "machine_id",
+  as: "machine",
+});
+
+db.machine.hasMany(db.feedingLine, {
+  foreignKey: "machine_id",
+  as: "feedingLines",
+  onDelete: "cascade",
 });
 
 db.ROLES = ["admin", "operator"];

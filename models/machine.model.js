@@ -1,5 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
-    const Machine = sequelize.define("machines", {
+  const Machine = sequelize.define(
+    "machines",
+    {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -15,9 +17,24 @@ module.exports = (sequelize, Sequelize) => {
       },
       deleted: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
       },
-    });
-    return Machine;
-  };
-  
+      createdBy: {
+        type: Sequelize.STRING,
+      },
+      updatedBy: {
+        type: Sequelize.STRING,
+      },
+    },
+    {
+      underscored: true,
+      timestamps: true,
+      defaultScope: {
+        where: {
+          deleted: false,
+        },
+      },
+    }
+  );
+  return Machine;
+};
