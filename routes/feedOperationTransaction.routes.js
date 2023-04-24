@@ -3,7 +3,7 @@ const express = require("express");
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/feedOperationTransaction.controller");
 
-const router = express.Router()
+const router = express.Router();
 
 /**
  * @openapi
@@ -46,10 +46,43 @@ const router = express.Router()
  *      402:
  *        description: request is invalid
  */
- router.post(
-    "/api/feedOperationTransactions",
-    controller.create
-);
+router.post("/api/feedOperationTransactions", controller.create);
+
+/**
+ * @openapi
+ * '/api/feedOperationTransactions':
+ *  post:
+ *     tags:
+ *     - FeedOperationTransaction
+ *     summary: Create feedOperationTransaction.
+ *     security:
+ *	     - bearerAuth: []
+ *     requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *           schema:
+ *            type: object
+ *            required:
+ *              - Date
+ *              - Feeding_line
+ *              - Brand
+ *            properties:
+ *              Date:
+ *                type: string
+ *              Feeding_line:
+ *                type: string
+ *              Brand:
+ *                type: string
+ *              Product:
+ *                type: string
+ *     responses:
+ *      200:
+ *        description: Created feedOperationTransaction from AI
+ *      402:
+ *        description: request is invalid
+ */
+router.post("/api/publishAIResult", controller.createFromAI);
 
 /**
  * @openapi
@@ -108,9 +141,9 @@ const router = express.Router()
  *           description: Bad request
  */
 router.get(
-    "/api/feedOperationTransactions",
-    [authJwt.verifyToken, authJwt.hasAtLeastOneRole(['Admin'])],
-    controller.getAll
+  "/api/feedOperationTransactions",
+  [authJwt.verifyToken, authJwt.hasAtLeastOneRole(["Admin"])],
+  controller.getAll
 );
 
 /**
@@ -162,10 +195,10 @@ router.get(
  *           description: Bad request
  */
 router.get(
-    "/api/feedOperationTransactions/:id",
-    [authJwt.verifyToken, authJwt.hasAtLeastOneRole(['Admin'])],
-    controller.getById
-); 
+  "/api/feedOperationTransactions/:id",
+  [authJwt.verifyToken, authJwt.hasAtLeastOneRole(["Admin"])],
+  controller.getById
+);
 
 /**
  * @openapi
@@ -206,9 +239,9 @@ router.get(
  *        description: Not Found
  */
 router.put(
-    "/api/feedOperationTransactions/:id",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.update
+  "/api/feedOperationTransactions/:id",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  controller.update
 );
 
 /**
@@ -234,9 +267,9 @@ router.put(
  *        description: Not Found
  */
 router.delete(
-    "/api/feedOperationTransactions/:id",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.deleteForce
+  "/api/feedOperationTransactions/:id",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  controller.deleteForce
 );
 
-module.exports = router
+module.exports = router;

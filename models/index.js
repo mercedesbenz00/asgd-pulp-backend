@@ -142,6 +142,10 @@ db.alarm.belongsTo(db.alarmType, {
   foreignKey: "alarm_type_code",
   sourceKey: "code",
 });
+db.alarm.belongsTo(db.feedingLine, {
+  foreignKey: "line_code",
+  sourceKey: "code",
+});
 
 db.feedingLine.belongsTo(db.machine, {
   foreignKey: "machine_id",

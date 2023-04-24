@@ -3,6 +3,7 @@ const authRoutes = require("./auth.routes.js");
 const authKeycloakRoutes = require("./auth.keycloak.routes.js");
 const userRoutes = require("./user.routes.js");
 const orderRoutes = require("./order.routes.js");
+const alarmRoutes = require("./alarm.routes.js");
 const brandRoutes = require("./brand.routes.js");
 const productRoutes = require("./product.routes.js");
 const pulpInfoRoutes = require("./pulpInfo.routes.js");
@@ -48,5 +49,6 @@ router.use(pulpInfoRoutes);
 router.use(feedOperationTransactionRoutes);
 router.use(machineRoutes);
 router.use(feedingLinesRoutes);
+router.use(alarmRoutes);
 
 module.exports = router;
