@@ -1,4 +1,3 @@
-const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
 const db = require("../models");
 const paginate = require("../utils/paginate");
@@ -6,12 +5,36 @@ const paginate = require("../utils/paginate");
 const option = {
   include: [
     {
-      model: db.machine,
-      as: "machine",
+      model: db.brand,
+      as: "brand",
+      attributes: ["id", "code", "name"],
+    },
+    {
+      model: db.product,
+      as: "product",
+      attributes: ["id", "code", "name"],
+    },
+    {
+      model: db.pulpType,
+      as: "pulpType",
+      attributes: ["id", "code", "name"],
+    },
+    {
+      model: db.pulpShape,
+      as: "pulpShape",
       attributes: ["id", "code", "name"],
     },
   ],
-  attributes: ["id", "machine_code", "code", "name", "deleted"],
+  attributes: [
+    "id",
+    "brand_code",
+    "product_code",
+    "type_code",
+    "pack_num",
+    "unit_weight",
+    "deleted",
+    "trained",
+  ],
   order: [["updatedAt", "DESC"]],
 };
 
@@ -25,17 +48,22 @@ exports.getAll = async (req, res) => {
         ...(!!term && {
           [Op.or]: [
             {
-              "$machine.code$": {
+              "$brand.code$": {
                 [Op.iLike]: `%${term}%`,
               },
             },
             {
-              code: {
+              "$product.code$": {
                 [Op.iLike]: `%${term}%`,
               },
             },
             {
-              name: {
+              "$pulpType.code$": {
+                [Op.iLike]: `%${term}%`,
+              },
+            },
+            {
+              "$pulpType.name$": {
                 [Op.iLike]: `%${term}%`,
               },
             },
@@ -45,8 +73,8 @@ exports.getAll = async (req, res) => {
     };
 
     const data = !!without_paginate
-      ? await db.feedingLine.findAll(newOption)
-      : await paginate(db.feedingLine, req, newOption, true);
+      ? await db.pulpInfo.findAll(newOption)
+      : await paginate(db.pulpInfo, req, newOption, true);
 
     res.status(200).send({
       status: true,
@@ -65,7 +93,7 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
   try {
-    const data = await db.feedingLine.findByPk(req.params["id"], option);
+    const data = await db.pulpInfo.findByPk(req.params["id"], option);
 
     res.status(200).send({
       status: true,
@@ -84,18 +112,30 @@ exports.getById = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const { machine_code, code, name, password, deleted } = req.body;
+    const { brand_code, product_code, ...rest } = req?.body;
+
+    const [brand] = await db.brand.findOrCreate({
+      where: {
+        code: brand_code,
+        deleted: false,
+      },
+    });
+
+    const [product] = await db.product.findOrCreate({
+      where: {
+        code: product_code,
+        deleted: false,
+      },
+    });
 
     const payload = {
-      machine_code,
-      code,
-      name,
-      deleted,
-      password: bcrypt.hashSync(password, 8),
+      ...rest,
+      brand_code: brand?.code,
+      product_code: product?.code,
       createdBy: req.userId,
     };
 
-    await db.feedingLine.create(payload);
+    await db.pulpInfo.create(payload);
 
     res.status(200).send({
       status: true,
@@ -114,19 +154,32 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const { id, machine_code, code, name, password, deleted } = req?.body;
+    const { id, brand_code, product_code, ...rest } = req?.body;
 
-    const data = await db.feedingLine.findByPk(id);
+    const data = await db.pulpInfo.findByPk(id);
 
     if (!data) {
       throw new Error(formatMessage("DATA_NOT_FOUND"));
     }
+
+    const [brand] = await db.brand.findOrCreate({
+      where: {
+        code: brand_code,
+        deleted: false,
+      },
+    });
+
+    const [product] = await db.product.findOrCreate({
+      where: {
+        code: product_code,
+        deleted: false,
+      },
+    });
+
     const payload = {
-      machine_code,
-      code,
-      name,
-      deleted,
-      ...(!!password && { password: bcrypt.hashSync(password, 8) }),
+      ...rest,
+      brand_code: brand?.code,
+      product_code: product?.code,
       updatedBy: req.userId,
     };
 
@@ -151,12 +204,12 @@ exports.delete = async (req, res) => {
   try {
     const { id } = req?.body;
 
-    const data = await db.feedingLine.findByPk(id);
+    const data = await db.pulpInfo.findByPk(id);
 
     if (!data) {
       return res.sendError([], formatMessage("DATA_NOT_FOUND"));
     }
-    await db.feedingLine.destroy({
+    await db.pulpInfo.destroy({
       where: {
         id: data?.id,
       },
@@ -164,7 +217,7 @@ exports.delete = async (req, res) => {
 
     res.status(200).send({
       status: true,
-      message: "SUCCESS",
+      message: "RECORD_DELETED_SUCCESSFULLY",
       data: req.body,
     });
   } catch (e) {

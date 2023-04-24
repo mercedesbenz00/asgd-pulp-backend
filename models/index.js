@@ -38,6 +38,7 @@ db.feedOperationTransaction =
 db.alarm = require("../models/alarm.model.js")(sequelize, Sequelize);
 db.alarmType = require("../models/alarmType.model.js")(sequelize, Sequelize);
 db.session = require("../models/session.model.js")(sequelize, Sequelize);
+db.pulpShape = require("../models/pulpShape.model.js")(sequelize, Sequelize);
 
 //#region Relationships
 db.user.belongsTo(db.role, {
@@ -57,26 +58,12 @@ db.productPulpTypeGroup.belongsTo(db.pulpType, {
   foreignKey: "pulp_type_code",
   sourceKey: "code",
 });
-// db.feedingLine.belongsTo(db.machine, {
-//   foreignKey: "machine_code",
-//   sourceKey: "code",
-// });
+
 db.camera.belongsTo(db.feedingLine, {
   foreignKey: "line_code",
   sourceKey: "code",
 });
-db.pulpInfo.belongsTo(db.pulpType, {
-  foreignKey: "type_code",
-  sourceKey: "code",
-});
-db.pulpInfo.belongsTo(db.brand, {
-  foreignKey: "brand_code",
-  sourceKey: "code",
-});
-db.pulpInfo.belongsTo(db.product, {
-  foreignKey: "product_code",
-  sourceKey: "code",
-});
+
 // order
 db.order.belongsTo(db.feedingLine, {
   foreignKey: "line_code",
@@ -148,14 +135,33 @@ db.alarm.belongsTo(db.feedingLine, {
 });
 
 db.feedingLine.belongsTo(db.machine, {
-  foreignKey: "machine_id",
+  foreignKey: "machine_code",
+  targetKey: "code",
   as: "machine",
 });
 
-db.machine.hasMany(db.feedingLine, {
-  foreignKey: "machine_id",
-  as: "feedingLines",
-  onDelete: "cascade",
+db.pulpInfo.belongsTo(db.brand, {
+  foreignKey: "brand_code",
+  targetKey: "code",
+  as: "brand",
+});
+
+db.pulpInfo.belongsTo(db.product, {
+  foreignKey: "product_code",
+  targetKey: "code",
+  as: "product",
+});
+
+db.pulpInfo.belongsTo(db.pulpType, {
+  foreignKey: "type_code",
+  targetKey: "code",
+  as: "pulpType",
+});
+
+db.pulpInfo.belongsTo(db.pulpShape, {
+  foreignKey: "pack_num",
+  targetKey: "code",
+  as: "pulpShape",
 });
 
 db.ROLES = ["admin", "operator"];
