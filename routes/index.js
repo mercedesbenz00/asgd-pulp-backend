@@ -9,6 +9,8 @@ const productRoutes = require("./product.routes.js");
 const pulpInfoRoutes = require("./pulpInfo.routes.js");
 const feedingLineRoutes = require("./feedingLine.routes.js");
 const feedOperationTransactionRoutes = require("./feedOperationTransaction.routes.js");
+const machineRoutes = require("./machine.routes.js");
+const feedingLinesRoutes = require("./feedingLines.routes.js");
 const mqttPublisherRoutes = require("./mqttPublisher.routes.js");
 const router = express.Router();
 
@@ -45,6 +47,8 @@ router.use(brandRoutes);
 router.use(productRoutes);
 router.use(pulpInfoRoutes);
 router.use(feedOperationTransactionRoutes);
+router.use(machineRoutes);
+router.use(feedingLinesRoutes);
 router.use(alarmRoutes);
 
 module.exports = router;

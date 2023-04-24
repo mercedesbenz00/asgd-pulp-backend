@@ -1,22 +1,41 @@
 module.exports = (sequelize, Sequelize) => {
-    const FeedingLine = sequelize.define("feeding_lines", {
+  const FeedingLine = sequelize.define(
+    "feeding_lines",
+    {
       id: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
         autoIncrement: true,
+        primaryKey: true,
         allowNull: false,
+      },
+      machineId: {
+        type: Sequelize.INTEGER,
       },
       code: {
         type: Sequelize.STRING,
         unique: true,
       },
-      // machine_code: {
-      //   type: Sequelize.STRING,
-      // },
-      desc: {
+      name: {
         type: Sequelize.STRING,
       },
-    });
-    return FeedingLine;
-  };
-  
+      password: {
+        type: Sequelize.STRING,
+      },
+      deleted: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      createdBy: {
+        type: Sequelize.STRING,
+      },
+      updatedBy: {
+        type: Sequelize.STRING,
+      },
+    },
+    {
+      underscored: true,
+      timestamps: true,
+    }
+  );
+  return FeedingLine;
+};

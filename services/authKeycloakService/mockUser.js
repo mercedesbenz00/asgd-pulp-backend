@@ -1,4 +1,5 @@
-const { USERS_ROLES_ENUM } = require("../../utils/constant");
+const { USERS_ROLES_ENUM, MODULES_ENUM } = require("../../utils/constant");
+
 const USERS = {
   [USERS_ROLES_ENUM.SYSTEM_ADMIN]: {
     isAuthenticated: true,
@@ -25,7 +26,7 @@ const USERS = {
       name: "ADMIN",
       path: "/ASGD-PULP/ADMIN",
     },
-    modules: ["MANAGE_MASTER_DATA"],
+    modules: [MODULES_ENUM.MANAGE_MASTER_DATA, MODULES_ENUM.MANAGE_DASHBOARD],
   },
 
   [USERS_ROLES_ENUM.OPERATOR]: {
@@ -39,7 +40,7 @@ const USERS = {
       name: "OPERATOR",
       path: "/ASGD-PULP/OPERATOR",
     },
-    modules: ["MANAGE_DASHBOARD"],
+    modules: [MODULES_ENUM.OPERATOR_DASHBOARD],
   },
 };
 
