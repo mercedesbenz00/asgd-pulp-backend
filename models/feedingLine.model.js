@@ -8,9 +8,6 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         allowNull: false,
       },
-      machineId: {
-        type: Sequelize.INTEGER,
-      },
       code: {
         type: Sequelize.STRING,
         unique: true,
@@ -29,6 +26,9 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
       },
       updatedBy: {
+        type: Sequelize.STRING,
+      },
+      machine_code: {
         type: Sequelize.STRING,
       },
     },

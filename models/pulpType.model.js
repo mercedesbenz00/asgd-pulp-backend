@@ -1,5 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
-    const PulpType = sequelize.define("pulp_types", {
+  const PulpType = sequelize.define(
+    "pulp_types",
+    {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -13,8 +15,25 @@ module.exports = (sequelize, Sequelize) => {
       name: {
         type: Sequelize.STRING,
       },
-    });
-  
-    return PulpType;
-  };
-  
+      deleted: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      createdBy: {
+        type: Sequelize.STRING,
+      },
+      updatedBy: {
+        type: Sequelize.STRING,
+      },
+    },
+    {
+      defaultScope: {
+        where: {
+          deleted: false,
+        },
+      },
+    }
+  );
+
+  return PulpType;
+};

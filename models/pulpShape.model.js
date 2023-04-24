@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
-  const Brand = sequelize.define(
-    "brands",
+  const PulpShape = sequelize.define(
+    "pulp_shapes",
     {
       id: {
         type: Sequelize.INTEGER,
@@ -34,5 +34,6 @@ module.exports = (sequelize, Sequelize) => {
       },
     }
   );
-  return Brand;
+
+  return PulpShape;
 };
