@@ -67,7 +67,7 @@ const triggerAlarm = async (lineCode, alarmTypeCode, alarmMsg) => {
 
 exports.createFromAI = async (req, res) => {
   try {
-    if (!req.body.Date || !req.body.Feeding_line || !req.body.Product) {
+    if (!req.body.Date || !req.body.Feeding_line || !req.body.Brand) {
       return res.status(404).send({
         message: "Invalid request data.",
         msg_code: "INVALID_REQUEST_DATA",
