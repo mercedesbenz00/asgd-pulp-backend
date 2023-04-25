@@ -177,6 +177,26 @@ exports.createFromAI = async (req, res) => {
           });
         }
       }
+
+      let sQuantity = currentOrder.s_actual_quantity || 0;
+
+      let sCast = currentOrder.s_cast_quantity || 1;
+
+      //   if (sQuantity + 1 > sCast) {
+      //     await triggerAlarm(
+      //       lineCode,
+      //       ALARM_TYPES.WRONG_RATIO,
+      //       `${lineCode}: wrong ratio`
+      //     );
+
+      //     return res.status(400).send({
+      //       success: false,
+      //       message: ALARM_TYPES.WRONG_RATIO,
+      //       msg_code: ALARM_TYPES.WRONG_RATIO,
+      //     });
+      //   }
+
+      foundOrder.quantity = (sQuantity + 1) % sCast;
     } else if (foundOrder.type != "S") {
       if (!currentOrder.a_brand_code && !currentOrder.b_brand_code) {
         // Need to check ratio
@@ -259,13 +279,13 @@ exports.createFromAI = async (req, res) => {
       actual_weight: actualWeight,
       transaction_time: recogMomentDate.toDate(),
     });
-    if (foundOrder.type !== "S") {
-      let actualQuantityField = `${foundOrder.type}_actual_quantity`;
-      actualQuantityField = actualQuantityField.toLowerCase();
-      await orderService.update(currentOrder.id, {
-        [actualQuantityField]: foundOrder.quantity,
-      });
-    }
+
+    let actualQuantityField = `${foundOrder.type}_actual_quantity`;
+    actualQuantityField = actualQuantityField.toLowerCase();
+    await orderService.update(currentOrder.id, {
+      [actualQuantityField]: foundOrder.quantity,
+    });
+
     res.send({
       message: "FeedOperationTransaction created successfully!",
       transaction: entity,
