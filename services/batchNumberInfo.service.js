@@ -1,15 +1,15 @@
 const db = require("../models");
-const PulpInfo = db.pulpInfo;
+const BatchNumberInfo = db.batchNumberInfo;
 
 exports.create = async (data) => {
   const newEntity = {
     ...data,
   };
 
-  return await PulpInfo.create(newEntity);
+  return await BatchNumberInfo.create(newEntity);
 };
 
-exports.getPulpInfoList = (query) => {
+exports.getBatchNumberInfos = (query) => {
   let { page, limit } = query;
   let offset = undefined;
   let pagination = undefined;
@@ -20,7 +20,8 @@ exports.getPulpInfoList = (query) => {
     offset = page * limit;
     pagination = { page, limit };
   }
-  return PulpInfo.findAndCountAll({
+  return BatchNumberInfo.findAndCountAll({
+    where: { deleted: false },
     limit: limit ? limit : undefined,
     offset: offset,
     order: [["updatedAt", "DESC"]],
@@ -30,21 +31,21 @@ exports.getPulpInfoList = (query) => {
 exports.update = async (id, data) => {
   const objectToUpdate = { ...data };
 
-  return await PulpInfo.update(objectToUpdate, { where: { id: id } });
+  return await BatchNumberInfo.update(objectToUpdate, { where: { id: id } });
 };
 
 exports.getById = async (id) => {
-  return await PulpInfo.findOne({
+  return await BatchNumberInfo.findOne({
     where: { id: id },
   });
 };
 
-exports.getByBrandAndProduct = async (brandCode, productCode) => {
-  return await PulpInfo.findOne({
-    where: { brand_code: brandCode, product_code: productCode },
+exports.getByBatchNumber = async (number) => {
+  return await BatchNumberInfo.findOne({
+    where: { number: number },
   });
 };
 
 exports.deleteForce = async (id) => {
-  return await PulpInfo.destroy({ where: { id: id } });
+  return await BatchNumberInfo.destroy({ where: { id: id } });
 };

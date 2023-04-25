@@ -39,6 +39,10 @@ db.alarm = require("../models/alarm.model.js")(sequelize, Sequelize);
 db.alarmType = require("../models/alarmType.model.js")(sequelize, Sequelize);
 db.session = require("../models/session.model.js")(sequelize, Sequelize);
 db.pulpShape = require("../models/pulpShape.model.js")(sequelize, Sequelize);
+db.batchNumberInfo = require("../models/batchNumberInfo.model.js")(
+  sequelize,
+  Sequelize
+);
 
 //#region Relationships
 db.user.belongsTo(db.role, {

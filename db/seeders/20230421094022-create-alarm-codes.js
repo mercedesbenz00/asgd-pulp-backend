@@ -26,6 +26,13 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          id: 4,
+          code: "BEFORE_TIME_SET",
+          name: "Fed before time set",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );

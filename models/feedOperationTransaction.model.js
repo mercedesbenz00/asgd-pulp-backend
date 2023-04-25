@@ -1,5 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
-    const FeedOperationTransaction = sequelize.define("feed_operation_transactions", {
+  const FeedOperationTransaction = sequelize.define(
+    "feed_operation_transactions",
+    {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -21,10 +23,13 @@ module.exports = (sequelize, Sequelize) => {
       input_source: {
         type: Sequelize.STRING,
       },
+      order_type: {
+        type: Sequelize.STRING,
+      },
       transaction_time: {
         type: Sequelize.DATE,
       },
-    });
-    return FeedOperationTransaction;
-  };
-  
+    }
+  );
+  return FeedOperationTransaction;
+};

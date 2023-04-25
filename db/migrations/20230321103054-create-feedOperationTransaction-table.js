@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('feed_operation_transactions', {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable("feed_operation_transactions", {
       id: {
         type: Sequelize.INTEGER,
         field: "id",
@@ -14,32 +14,32 @@ module.exports = {
         type: Sequelize.STRING,
         field: "line_code",
         references: {
-          model: 'feeding_lines',
-          key: 'code'
+          model: "feeding_lines",
+          key: "code",
         },
       },
       order_id: {
         type: Sequelize.INTEGER,
         field: "order_id",
         references: {
-          model: 'orders',
-          key: 'id'
+          model: "orders",
+          key: "id",
         },
       },
       brand_code: {
         type: Sequelize.STRING,
         field: "brand_code",
         references: {
-          model: 'brands',
-          key: 'code'
+          model: "brands",
+          key: "code",
         },
       },
       product_code: {
         type: Sequelize.STRING,
         field: "product_code",
         references: {
-          model: 'products',
-          key: 'code'
+          model: "products",
+          key: "code",
         },
       },
       pack_count: {
@@ -60,28 +60,45 @@ module.exports = {
         type: Sequelize.STRING,
         field: "input_source",
       },
+      order_type: {
+        type: Sequelize.STRING,
+        field: "order_type",
+      },
       transaction_time: {
-          type: Sequelize.DATE,
-          field: "transaction_time",
-          allowNull: false,
-          defaultValue: Sequelize.NOW
+        type: Sequelize.DATE,
+        field: "transaction_time",
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
       },
       createdAt: {
-          type: Sequelize.DATE,
-          field: "createdAt",
-          allowNull: false,
-          defaultValue: Sequelize.NOW
+        type: Sequelize.DATE,
+        field: "createdAt",
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
       },
       updatedAt: {
-          type: Sequelize.DATE,
-          field: "updatedAt",
-          allowNull: false,
-          defaultValue: Sequelize.NOW
-      }
+        type: Sequelize.DATE,
+        field: "updatedAt",
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
+      },
     });
+
+    await queryInterface.addIndex(
+      "feed_operation_transactions",
+      [
+        {
+          attribute: "transaction_time",
+          order: "DESC",
+        },
+      ],
+      {
+        unique: false,
+      }
+    );
   },
 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('feed_operation_transactions');
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable("feed_operation_transactions");
+  },
 };
